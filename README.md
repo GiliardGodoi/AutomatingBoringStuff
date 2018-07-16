@@ -1,4 +1,4 @@
-# AutomatingBoringStuff
+# Automating Boring Stuff
 
 Até onde podemos automatizar o trabalho chato em um escritório?
 
