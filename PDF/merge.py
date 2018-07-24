@@ -60,6 +60,27 @@ def exemplo_02():
     pdfFileObj.close()
     pdfWaterMarkFile.close()
 
+def exemplo_03():
+    fileA = 'DOCUMENTO0004.pdf'
+    fileB = 'DOCUMENTO0003.pdf'
+
+    pdfFileObjA = open(fileA,'rb')
+    pdfFileObjB = open(fileB,'rb')
+
+    readerA = PyPDF2.PdfFileReader(pdfFileObjA)
+    readerB = PyPDF2.PdfFileReader(pdfFileObjB)
+
+    pdfWriter = PyPDF2.PdfFileWriter()
+
+    for b in range(0,7):
+        a = 6 - b
+        page = readerA.getPage(a)
+        pdfWriter.addPage(page)
+        page = readerB.getPage(b)
+        pdfWriter.addPage(page)
+
+    output = open('saida.pdf','wb')
+    pdfWriter.write(output)
 
 if __name__ == "__main__":
     exemplo_02()
