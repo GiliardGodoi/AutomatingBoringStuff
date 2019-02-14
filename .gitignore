@@ -1,3 +1,9 @@
+# Arquivos de dados sensíveis
+*.xlsx
+*.xls
+*.doc
+*.docx
+
 # VS code folder
 .vscode
 
