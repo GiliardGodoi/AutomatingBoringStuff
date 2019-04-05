@@ -31,7 +31,6 @@ def obter_dados_deputados(link):
 
     return registro
 
-
 def obter_nome_deputado(soup):
     divNome = soup.find('p', attrs={'class': 'nome'})
     nome = divNome.text
