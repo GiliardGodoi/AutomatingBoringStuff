@@ -9,14 +9,14 @@ from bs4 import BeautifulSoup as bsp
 import re
 import csv
 
-arquivo = os.path.join('pagina-web','Resultado Pesquisa — Portal da Câmara dos Deputados.html')
+arquivo = os.path.join('data','pagina-web','Resultado Pesquisa — Portal da Câmara dos Deputados.html')
 html_doc = open(arquivo,'r',encoding='utf-8').read() # iso-8859-1 latin-1
 soup = bsp(html_doc,'html.parser')
 print(soup.title)
 
-links = soup.find_all('a',href=True)
+# links = soup.find_all('a',href=True)
 
-deputados = [ a['href'] for a in links if ( '/deputado/Dep_Detalhe.asp?id' in a['href'] ) ]
+# deputados = [ a['href'] for a in links if ( '/deputado/Dep_Detalhe.asp?id' in a['href'] ) ]
 
 links = soup.find_all('ul',class_='visualNoMarker')
 
