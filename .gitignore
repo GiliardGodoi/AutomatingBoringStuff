@@ -111,3 +111,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# data folders
+data
+*.pdf
+*.csv
+*.html
+*.css
+*.js
