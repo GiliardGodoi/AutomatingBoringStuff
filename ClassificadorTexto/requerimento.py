@@ -3,6 +3,8 @@
 @author: Giliard
 """
 import docx
+from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH as ALIGN
 import os
 import re
 
@@ -16,7 +18,7 @@ def obterTexto(filename):
 
 def limparTextoPorEsquema(documento,esquema={}):
     documento = [ line.strip() for line in documento ]
-    documento = [ line for line in documento if len(line) is not 0 ]
+    documento = [ (line) for line in documento if len(line) is not 0 ]
     documento = '\n'.join(documento)
 
     for expressao in esquema.keys():
@@ -24,14 +26,14 @@ def limparTextoPorEsquema(documento,esquema={}):
 
     return documento
 
-def relacionarRequerimentos(documento):
+def relacionarRequerimentos(documento,documentoRelacaoRequerimentos):
 
     documento = documento.split('\n')
     
     maxIndice = len(documento)
     indice = 0
-    relacao = list()
-
+    # relacao = list()
+    
     while indice < maxIndice:
         linha = documento[indice]
         if linha == 'BEGIN_DOCUMENT':
@@ -42,28 +44,31 @@ def relacionarRequerimentos(documento):
                 linha = documento[final]
                 if linha == 'END_DOCUMENT':
                     break
-                texto.append(linha)
+                texto.append(linha + ' ')
                 final += 1
             indice = final + 1
 
-            texto = ' '.join(texto)
-            requerimento = tipo + ' de autoria d' + texto[0].lower() + texto[1:]
-            relacao.append(requerimento)
+            texto = ''.join(texto)
+            textoRequerimento = ', de autoria d' + texto[0].lower() + texto[1:]
+            # requerimento = tipo + textoRequerimento
+            # relacao.append(requerimento)
+            documentarRelacaoRequerimentos(tipo,textoRequerimento,documento=documentoRelacaoRequerimentos)
         else :
             indice += 1
-
-    return relacao
     
 
-def salvarRelacao(requerimentos,ouput_file='saida.docx'):
+def documentarRelacaoRequerimentos(tipoRequerimento,textoRequerimento,documento):
+    paragrafo = documento.add_paragraph()
+    paragrafo.alignment = ALIGN.JUSTIFY
     
-    document = docx.Document()
+    run = paragrafo.add_run(tipoRequerimento)
+    run.bold = True
+    run.font.name = "Times New Romam"
+    run.font.size = Pt(12)
 
-    for texto in requerimentos:
-        document.add_paragraph(texto)
-        
-
-    document.save(ouput_file)
+    run = paragrafo.add_run(textoRequerimento)
+    run.font.name = "Times New Romam"
+    run.font.size = Pt(12)
 
 
 if __name__ == "__main__":
@@ -81,14 +86,16 @@ if __name__ == "__main__":
         '\n\n+' : '\n'
     }   
 
-    diretorio = os.path.join('data','08')
+    diretorio = os.path.join('data','15')
     arquivos = os.listdir(diretorio)
 
-    requerimentos = list()
+    # requerimentos = list()
+    saida = docx.Document()
+    saida.core_properties.language = "pt-BR"
 
     for word_file in  arquivos:
         word_text = obterTexto(os.path.join(diretorio,word_file))
         word_text = limparTextoPorEsquema(word_text,limpar)
-        requerimentos += relacionarRequerimentos(word_text)
-        
-    salvarRelacao(requerimentos,ouput_file='saida.docx')
+        relacionarRequerimentos(word_text,documentoRelacaoRequerimentos=saida)
+    
+    saida.save('requerimentos.docx')
