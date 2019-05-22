@@ -18,7 +18,7 @@ def obterTexto(filename):
 
 def limparTextoPorEsquema(documento,esquema={}):
     documento = [ line.strip() for line in documento ]
-    documento = [ (line) for line in documento if len(line) is not 0 ]
+    documento = [ line for line in documento if len(line) is not 0 ]
     documento = '\n'.join(documento)
 
     for expressao in esquema.keys():
@@ -73,7 +73,7 @@ def documentarRelacaoRequerimentos(tipoRequerimento,textoRequerimento,documento)
 
 if __name__ == "__main__":
 
-    limpar = {
+    esquema = {
         'Excelentíssimo Senhor Odemir Jacob' : '',
         'Presidente da Câmara Municipal de Santo Antônio da Platina' : 'BEGIN_DOCUMENT',
         'Nestes termos,' : '',
@@ -82,11 +82,11 @@ if __name__ == "__main__":
         'no uso das atribuições que lhes são conferidas pelo Regimento Interno,' : '',
         'requer a Vossa Excelência que seja expedido ofício': '',
         'SECRETARIA DA CÂMARA MUNICIPAL DE SANTO ANTÔNIO DA PLATINA, ESTADO DO PARANÁ,' : '\nEND_DOCUMENT\n',
-        'em \d+ de \w+ de \d+' : '',
+        r'em \d+ de \w+ de \d+' : '',
         '\n\n+' : '\n'
-    }   
+    } 
 
-    diretorio = os.path.join('data','15')
+    diretorio = os.path.join('data','20')
     arquivos = os.listdir(diretorio)
 
     # requerimentos = list()
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     for word_file in  arquivos:
         word_text = obterTexto(os.path.join(diretorio,word_file))
-        word_text = limparTextoPorEsquema(word_text,limpar)
+        word_text = limparTextoPorEsquema(word_text,esquema)
         relacionarRequerimentos(word_text,documentoRelacaoRequerimentos=saida)
     
-    saida.save('requerimentos.docx')
+    saida.save('relacao.docx')
