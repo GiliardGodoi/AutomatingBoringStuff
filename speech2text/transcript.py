@@ -4,7 +4,7 @@ import time
 import os
 import json
 import re
-
+import logging
 
 def transcripty_audio(file_path):
 
@@ -38,14 +38,25 @@ def salvar_saida(content, filename):
                     
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='output.log', filemode='w')
+    
     diretorio_dados = 'audios'
+    diretortio_texto = 'texts'
+
     audios = os.listdir(diretorio_dados)
     print(audios, end='\n\n')
     for a in audios:
         print(f'Arquivo: {os.path.join(diretorio_dados,a)}. . .',end='\r')
-        texto, tempo = transcripty_audio(os.path.join(diretorio_dados,a))
-        print(f'Arquivo: {a} \tTempo: {tempo}',end='\n')
-        output_name = re.sub('.wav','.txt',a)
-        salvar_saida(texto,output_name)
+        try:
+            texto, tempo = transcripty_audio(os.path.join(diretorio_dados,a))
+        except Exception as e:
+            print(f'Erro para o arquivo: {a}',end='\n')
+            logging.exception("Exception occurred")
+        else:
+            print(f'Arquivo: {a} \tTempo: {tempo}',end='\n')
+            output_name = re.sub('.wav','.txt',a)
+            salvar_saida(texto,os.path.join(diretortio_texto,output_name))
+        
+        
             
             
