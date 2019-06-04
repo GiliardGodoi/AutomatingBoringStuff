@@ -86,7 +86,7 @@ if __name__ == "__main__":
         '\n\n+' : '\n'
     } 
 
-    diretorio = os.path.join('data','20')
+    diretorio = os.path.join('data','27')
     arquivos = os.listdir(diretorio)
 
     # requerimentos = list()
@@ -98,4 +98,4 @@ if __name__ == "__main__":
         word_text = limparTextoPorEsquema(word_text,esquema)
         relacionarRequerimentos(word_text,documentoRelacaoRequerimentos=saida)
     
-    saida.save('relacao.docx')
+    saida.save('RELACAO.docx')
