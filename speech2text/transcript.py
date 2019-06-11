@@ -6,6 +6,7 @@ import json
 import re
 import logging
 
+
 def transcripty_audio(file_path):
 
     recognizer = sr.Recognizer()
@@ -22,12 +23,11 @@ def transcripty_audio(file_path):
 def salvar_saida(content, filename):
     def save(obj,file):
         if isinstance(obj,dict):
-                json.dump(obj,file)
+            json.dump(obj,file)
         if isinstance(obj,str):
-                file.write(obj)
+            file.write(obj)
         if isinstance(obj,list):
-                save(obj[0],file)
-
+            save(obj[0],file)
 
     with open(filename,'w') as file:
         save(content,file)
@@ -38,25 +38,26 @@ def salvar_saida(content, filename):
                     
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='output.log', filemode='w')
     
     diretorio_dados = 'audios'
-    diretortio_texto = 'texts'
-
+    diretorio_texto = 'texts'
     audios = os.listdir(diretorio_dados)
-    print(audios, end='\n\n')
+
+    print(f'Iniciando chamadas: {len(audios)} arquivos')
+    print(audios,end='\n\n')
+
     for a in audios:
         print(f'Arquivo: {os.path.join(diretorio_dados,a)}. . .',end='\r')
         try:
             texto, tempo = transcripty_audio(os.path.join(diretorio_dados,a))
-        except Exception as e:
-            print(f'Erro para o arquivo: {a}',end='\n')
+        except Exception as error:
+            print(f'Arquivo: {os.path.join(diretorio_dados,a)} - Erro: {error}',end='\n')
             logging.exception("Exception occurred")
-        else:
-            print(f'Arquivo: {a} \tTempo: {tempo}',end='\n')
+        else:       
+            print(f'Arquivo: {a} \tTempo: {tempo}',end='\r')
             output_name = re.sub('.wav','.txt',a)
-            salvar_saida(texto,os.path.join(diretortio_texto,output_name))
-        
-        
+            output_name = os.path.join(diretorio_texto,output_name)
+            print(f'Arquivo: {a} \tTempo: {tempo} Salvando em {output_name}',end='\n')
+            salvar_saida(texto,output_name)
             
             
