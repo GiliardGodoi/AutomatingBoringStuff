@@ -33,9 +33,6 @@ def salvar_saida(content, filename):
         save(content,file)
 
     return True
-                    
-
-                    
 
 if __name__ == "__main__":
     
