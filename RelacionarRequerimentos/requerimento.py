@@ -85,8 +85,16 @@ if __name__ == "__main__":
         r'em \d+ de \w+ de \d+' : '',
         '\n\n+' : '\n'
     } 
+    # no uso das atribuições que lhe são conferidas pelo Regimento Interno # lhes -> lhe
+    # no uso das atribuições que lhe são conferidas pelo Regimento Interno, requer a Vossa Excelência que seja expedido
+    # no uso das atribuições que lhe são conferidas pelo Regimento Interno, requer a Vossa Excelência que seja expedido 
+    # no uso das atribuições que lhe são conferidas pelo Regimento Interno
+    # no uso das atribuições que lhe são conferidas pelo Regimento Interno, requerem a Vossa Excelência que seja expedido ofício
+    # infra-assinados, requerem a Vossa Excelência que seja expedido ofício 
+    # ,   s  # nos requerimentos da Miriam
+    # de autoria da Vereadora Mirian Rodrigues Bonomo Montanheiro,   s a Ilustríssima Diretora 
 
-    diretorio = os.path.join('data','27')
+    diretorio = os.path.join('data')
     arquivos = os.listdir(diretorio)
 
     # requerimentos = list()
